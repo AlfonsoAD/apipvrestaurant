@@ -31,4 +31,12 @@ class UserSerializer(serializers.ModelSerializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["first_name", "last_name"]
+        fields = ["first_name", "last_name", "password"]
+        read_only_fields = ("id", "email", "username",)
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop("password", None)
+        if password is not None:
+            instance.set_password(password)
+        instance.save()
+        return instance
