@@ -9,4 +9,4 @@ class Menu(models.Model):
     updated_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self) -> str:
-        return f"{self.name - self.description}"
+        return f"{self.name}"

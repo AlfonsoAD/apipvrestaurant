@@ -59,6 +59,9 @@ INSTALLED_APPS = [
     'orders',
     'details_order',
     'product_notes',
+    'sales',
+    'box_cuts',
+    'box_oppenings',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +72,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'middlewares.response_middleware.CustomResponseMiddleware',
 ]
 
 ROOT_URLCONF = 'pvrestaurant.urls'
@@ -141,7 +143,10 @@ USE_TZ = True
 REST_FRAMEWORK = {  # Para usar el JWT
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_RENDERER_CLASSES': (
+        'pvrestaurant.renderers.CustomJSONRenderer',
+    ),
 }
 
 cloudinary.config(

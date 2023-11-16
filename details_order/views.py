@@ -1,3 +1,4 @@
+from pvrestaurant.renderers import CustomJSONRenderer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
@@ -15,5 +16,5 @@ class DetailsOrderViewSet(ModelViewSet):
         instance = Order.objects.get(pk=kwargs['pk'])
         instance.is_active = False
         instance.save()
-        data = {"ok": True, "message": "Order deleted successfully"}
+        data = {"ok": True, "message": "Detail order deleted successfully"}
         return Response(status=status.HTTP_200_OK, data=data)

@@ -17,4 +17,4 @@ class Table(models.Model):
     updated_at = models.DateTimeField(blank=True, null=True)
 
     def __str__(self) -> str:
-        return f"{self.number - self.table_status}"
+        return f"{self.number}"

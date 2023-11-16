@@ -16,7 +16,7 @@ class User(AbstractUser):
         null=True,
         validators=[validate_roles]
     )
-    image = CloudinaryField('image')
+    image = CloudinaryField('image', blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
