@@ -15,4 +15,4 @@ class Product(models.Model):
         Category, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.name}"

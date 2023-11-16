@@ -5,7 +5,7 @@ def validate_roles(value):
     allowed_roles = ["admin", "cashier", "waiter"]
     for role in value:
         if role not in allowed_roles:
-            raise ValidationError(f"{role} tt is not an allowed role.")
+            raise ValidationError(f"{role} it is not an allowed role.")
 
 
 def include_role(role: str, list_roles: list):

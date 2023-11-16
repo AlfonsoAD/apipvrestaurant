@@ -21,6 +21,11 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from categorys.routes import router_categorys
 from products.routes import router_products
+from tables.routes import router_table
+from menus.routes import router_menu
+from details_menu.routes import router_details_menu
+from orders.routes import router_order
+from details_order.routes import router_details_order
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -40,6 +45,11 @@ urlpatterns = [
     path("api/", include("users.routes")),
     path("api/", include(router_categorys.urls)),
     path("api/", include(router_products.urls)),
+    path("api/", include(router_table.urls)),
+    path("api/", include(router_menu.urls)),
+    path("api/", include(router_details_menu.urls)),
+    path("api/", include(router_order.urls)),
+    path("api/", include(router_details_order.urls)),
     path('docs/', schema_view.with_ui('swagger',
          cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',
