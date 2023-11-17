@@ -11,7 +11,7 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(blank=True, null=True)
-    category = models.OneToOneField(
+    category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self) -> str:

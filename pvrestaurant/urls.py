@@ -30,6 +30,7 @@ from product_notes.routes import router_product_notes
 from box_oppenings.routes import router_box_oppenings
 from box_cuts.routes import router_box_cuts
 from sales.routes import router_sales
+from users.routes import router_users
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -47,6 +48,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/", include("users.routes")),
+    path("api/", include(router_users.urls)),
     path("api/", include(router_categorys.urls)),
     path("api/", include(router_products.urls)),
     path("api/", include(router_table.urls)),

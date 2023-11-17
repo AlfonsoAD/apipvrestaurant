@@ -1,15 +1,18 @@
 from pvrestaurant.renderers import CustomJSONRenderer
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from users.serializers import UserRegisterSerializer, UserSerializer, UserUpdateSerializer
+from users.serializers import UserRegisterSerializer, UserSerializer, UserUpdateSerializer, UsersSerializer
 from .models import User
+from pvrestaurant.permissions import IsAdminRoleUser
 
 
 class UserRegisterView(APIView):
+    permission_classes = [IsAuthenticated, IsAdminRoleUser]
 
-    # Para registrar un usuario
     def post(self, request):
         serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):  # Si el serializer es valido
@@ -19,7 +22,7 @@ class UserRegisterView(APIView):
 
 
 class UserView(APIView):
-    permission_classes = [IsAuthenticated]  # Solo usuarios autenticados
+    permission_classes = [IsAuthenticated, IsAdminRoleUser]
 
     def get(self, request):
         serializer = UserSerializer(request.user)
@@ -32,3 +35,16 @@ class UserView(APIView):
             serializer.save()
             return Response(status=status.HTTP_200_OK, data=serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UsersView(ModelViewSet):
+    permission_classes = [IsAuthenticated, IsAdminRoleUser]
+    serializer_class = UsersSerializer
+    queryset = User.objects.all().filter(is_active=True)
+    filter_backends = [DjangoFilterBackend]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = User.objects.get(pk=kwargs["pk"])
+        instance.is_active = False
+        instance.save()
+        return Response(status=status.HTTP_200_OK, data="User deleted successfully")

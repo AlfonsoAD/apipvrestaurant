@@ -6,10 +6,11 @@ from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Table
 from .serializers import TableSerializer
+from pvrestaurant.permissions import IsAdminRoleUser
 
 
 class TableViewSet(ModelViewSet):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminRoleUser]
     serializer_class = TableSerializer
     queryset = Table.objects.all().filter(is_active=True)
     filter_backends = [DjangoFilterBackend]

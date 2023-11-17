@@ -4,11 +4,10 @@ from handlers.table_handler import validate_status_table
 
 
 class Table(models.Model):
-    number = models.IntegerField()
+    number = models.IntegerField(unique=True)
     capacity = models.IntegerField()
     table_status = ArrayField(
         models.CharField(max_length=30),
-        default="available",
         null=False,
         validators=[validate_status_table]
     )
