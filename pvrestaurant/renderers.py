@@ -16,5 +16,6 @@ class CustomJSONRenderer(JSONRenderer):
                 response_data['ok'] = False
                 response_data['error'] = data.get(
                     'detail', 'Error desconocido')
+                response_data.pop('results', None)
 
         return super().render(response_data, accepted_media_type, renderer_context)

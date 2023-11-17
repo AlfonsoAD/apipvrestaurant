@@ -2,12 +2,15 @@ from pvrestaurant.renderers import CustomJSONRenderer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from products.models import Product
 from products.serializers import ProductSerializer
+from pvrestaurant.permissions import IsAdminRoleUser
 
 
 class ProductViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated, IsAdminRoleUser]
     serializer_class = ProductSerializer
     queryset = Product.objects.all().filter(is_active=True)
     filter_backends = [DjangoFilterBackend]
@@ -16,5 +19,4 @@ class ProductViewSet(ModelViewSet):
         instance = Product.objects.get(pk=kwargs['pk'])
         instance.is_active = False
         instance.save()
-        data = {"ok": True, "message": "Product deleted successfully"}
-        return Response(status=status.HTTP_200_OK, data=data)
+        return Response(status=status.HTTP_200_OK, data="Product deleted successfully")

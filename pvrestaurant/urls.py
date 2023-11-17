@@ -26,6 +26,10 @@ from menus.routes import router_menu
 from details_menu.routes import router_details_menu
 from orders.routes import router_order
 from details_order.routes import router_details_order
+from product_notes.routes import router_product_notes
+from box_oppenings.routes import router_box_oppenings
+from box_cuts.routes import router_box_cuts
+from sales.routes import router_sales
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -50,6 +54,10 @@ urlpatterns = [
     path("api/", include(router_details_menu.urls)),
     path("api/", include(router_order.urls)),
     path("api/", include(router_details_order.urls)),
+    path("api/", include(router_product_notes.urls)),
+    path("api/", include(router_box_oppenings.urls)),
+    path("api/", include(router_box_cuts.urls)),
+    path("api/", include(router_sales.urls)),
     path('docs/', schema_view.with_ui('swagger',
          cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',

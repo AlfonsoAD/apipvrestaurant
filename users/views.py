@@ -14,9 +14,7 @@ class UserRegisterView(APIView):
         serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):  # Si el serializer es valido
             serializer.save()
-            data = {"ok": True, "message": "User created successfully",
-                    "results": serializer.data}
-            return Response(status=status.HTTP_201_CREATED, data=data)
+            return Response(status=status.HTTP_201_CREATED, data=serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -25,15 +23,12 @@ class UserView(APIView):
 
     def get(self, request):
         serializer = UserSerializer(request.user)
-        data = {"ok": True, "results": serializer.data}
-        return Response(status=status.HTTP_200_OK, data=data)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
 
     def put(self, request):
         user = User.objects.get(id=request.user.id)
         serializer = UserUpdateSerializer(user, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            data = {"ok": True, "message": "User updated successfully",
-                    "results": serializer.data}
-            return Response(status=status.HTTP_200_OK, data=data)
+            return Response(status=status.HTTP_200_OK, data=serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

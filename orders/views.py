@@ -2,12 +2,15 @@ from pvrestaurant.renderers import CustomJSONRenderer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Order
 from .serializers import OrderSerializer
+from pvrestaurant.permissions import IsWaiterRoleUser
 
 
 class OrderViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated, IsWaiterRoleUser]
     serializer_class = OrderSerializer
     queryset = Order.objects.all().filter(is_active=True)
     filter_backends = [DjangoFilterBackend]
@@ -16,5 +19,4 @@ class OrderViewSet(ModelViewSet):
         instance = Order.objects.get(pk=kwargs['pk'])
         instance.is_active = False
         instance.save()
-        data = {"ok": True, "message": "Order deleted successfully"}
-        return Response(status=status.HTTP_200_OK, data=data)
+        return Response(status=status.HTTP_200_OK, data="Order deleted successfully")
