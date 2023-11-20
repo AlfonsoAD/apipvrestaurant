@@ -5,9 +5,36 @@ from rest_framework.viewsets import ModelViewSet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from users.serializers import UserRegisterSerializer, UserSerializer, UserUpdateSerializer, UsersSerializer
+from users.serializers import CustomTokenObtainPairSerializer, UserRegisterSerializer, UserSerializer, UserUpdateSerializer, UsersSerializer
 from .models import User
 from pvrestaurant.permissions import IsAdminRoleUser
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            # token_data = serializer.validated_data
+            user = serializer.user
+
+            data_user = [
+                {
+                    "id": user.id,
+                    "username": user.username,
+                    "email": user.email,
+                    "roles": user.roles
+                }
+            ]
+            response.data['user'] = data_user
+
+            return response
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserRegisterView(APIView):

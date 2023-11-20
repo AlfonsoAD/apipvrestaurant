@@ -1,6 +1,41 @@
 from rest_framework import serializers
 from .models import User
 from handlers.user_handler import activate_role_user
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        data_user = [
+            {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "roles": user.roles
+            }
+        ]
+        token['user'] = data_user
+
+        return token
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        user = self.user or self.context['request'].user
+        data_user = [
+            {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "roles": user.roles
+            }
+        ]
+        data['user'] = data_user
+
+        return data
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
