@@ -13,9 +13,10 @@ class CustomJSONRenderer(JSONRenderer):
         if renderer_context and 'response' in renderer_context:
             response = renderer_context['response']
             if not response.status_code // 100 == 2:  # Cualquier código de estado 2xx se considera éxito
+                response_data.pop('results', None)  # Elimina el campo results
                 response_data['ok'] = False
+                response_data['data_error'] = response.data
                 response_data['error'] = data.get(
                     'detail', 'Unknown error')
-                response_data["results"] = None
 
         return super().render(response_data, accepted_media_type, renderer_context)
