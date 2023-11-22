@@ -1,14 +1,15 @@
 from django.urls import path
 from .views import UserRegisterView, UserView, UsersView
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from .views import UsersView, CustomTokenObtainPairView
+from .views import UsersView, CustomTokenObtainPairView, TokenValidationView
 
 urlpatterns = [
     path('auth/register', UserRegisterView.as_view(), name='register'),
     # path('auth/login', TokenObtainPairView.as_view(), name='login'),
     path('auth/login', CustomTokenObtainPairView.as_view(), name='login'),
     path('auth/token/refresh', TokenRefreshView.as_view(), name='refresh_token'),
+    path("auth/renew", TokenValidationView.as_view(), name="token_validation"),
     path("auth/me", UserView.as_view()),
 ]
 

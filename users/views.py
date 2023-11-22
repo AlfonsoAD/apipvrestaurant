@@ -37,7 +37,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserRegisterView(APIView):
+class UserRegisterView(APIView):  # Para registrar un usuario
     permission_classes = [IsAuthenticated, IsAdminRoleUser]
 
     def post(self, request):
@@ -48,7 +48,7 @@ class UserRegisterView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserView(APIView):
+class UserView(APIView):  # Para el usuario logueado
     permission_classes = [IsAuthenticated, IsAdminRoleUser]
 
     def get(self, request):
@@ -64,7 +64,7 @@ class UserView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UsersView(ModelViewSet):
+class UsersView(ModelViewSet):  # Listar usuarios
     permission_classes = [IsAuthenticated, IsAdminRoleUser]
     serializer_class = UsersSerializer
     queryset = User.objects.all().filter(is_active=True)
@@ -75,3 +75,11 @@ class UsersView(ModelViewSet):
         instance.is_active = False
         instance.save()
         return Response(status=status.HTTP_200_OK, data="User deleted successfully")
+
+
+class TokenValidationView(APIView):  # Validar token
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
