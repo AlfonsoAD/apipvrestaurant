@@ -179,6 +179,8 @@ cloudinary.config(
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
+    "https://devapipvrestaurant.onrender.com",
+    "https://apipvrestaurant.onrender.com"
 ]
 
 CORS_ALLOW_METHODS = (
