@@ -6,7 +6,6 @@ from .views import UsersView, CustomTokenObtainPairView, TokenValidationView
 
 urlpatterns = [
     path('auth/register', UserRegisterView.as_view(), name='register'),
-    # path('auth/login', TokenObtainPairView.as_view(), name='login'),
     path('auth/login', CustomTokenObtainPairView.as_view(), name='login'),
     path('auth/token/refresh', TokenRefreshView.as_view(), name='refresh_token'),
     path("auth/renew", TokenValidationView.as_view(), name="token_validation"),
