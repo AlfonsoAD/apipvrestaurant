@@ -14,6 +14,9 @@ shortuuid = "*"
 cloudinary = "*"
 django-filter = "*"
 django-cors-headers = "*"
+dj-database-url = "*"
+whitenoise = {extras = ["brotli"], version = "*"}
+gunicorn = "*"
 
 [dev-packages]
 
