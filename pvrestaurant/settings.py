@@ -180,7 +180,9 @@ cloudinary.config(
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "https://pvrestaurant.vercel.app",
-    "https://pvrestaurant-git-dev-alfonsoad.vercel.app"
+    "https://pvrestaurant-git-dev-alfonsoad.vercel.app",
+    "https://devapipvrestaurant.onrender.com",
+    "https://apipvrestaurant.onrender.com",
 ]
 
 CORS_ALLOW_METHODS = (
