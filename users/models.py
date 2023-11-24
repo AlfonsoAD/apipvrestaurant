@@ -18,5 +18,5 @@ class User(AbstractUser):
     )
     image = CloudinaryField('image', blank=True, null=True)
 
-    # USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
