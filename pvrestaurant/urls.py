@@ -57,6 +57,7 @@ urlpatterns = [
     path("api/", include("details_menu.routes")),
     path("api/", include(router_order.urls)),
     path("api/", include(router_details_order.urls)),
+    path("api/", include("details_order.routes")),
     path("api/", include(router_product_notes.urls)),
     path("api/", include(router_box_oppenings.urls)),
     path("api/", include(router_box_cuts.urls)),
