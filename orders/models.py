@@ -11,7 +11,7 @@ class Order(models.Model):
         max_length=255, unique=True, default=order_number_create)
     date = models.DateTimeField(auto_now_add=True)
     process_status = ArrayField(models.CharField(
-        max_length=50), default="orderPending", validators=[validate_status])
+        max_length=50), default=["orderPending"], validators=[validate_status])
     priority = models.IntegerField(default=1)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
