@@ -1,12 +1,15 @@
 from rest_framework import serializers
 from .models import Order
-from users.serializers import UserSerializer
-from tables.serializers import TableSerializer
+from users.models import User
+from tables.models import Table
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    table = TableSerializer()
+    user = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all().filter(is_active=True)
+    )
+    table = serializers.PrimaryKeyRelatedField(
+        queryset=Table.objects.all().filter(is_active=True))
 
     class Meta:
         model = Order
