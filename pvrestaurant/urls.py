@@ -53,6 +53,7 @@ urlpatterns = [
     path("api/", include(router_products.urls)),
     path("api/", include(router_table.urls)),
     path("api/", include(router_menu.urls)),
+    path("api/", include("menus.routes")),
     path("api/", include(router_details_menu.urls)),
     path("api/", include("details_menu.routes")),
     path("api/", include(router_order.urls)),

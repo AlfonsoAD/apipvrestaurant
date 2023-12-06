@@ -10,8 +10,11 @@ class DetailsOrder(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-    product = models.OneToOneField(
+    product = models.ForeignKey(
         Product, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f"{self.order} {self.product} {self.articles_count}"
+
+    class Meta:
+        unique_together = ('order', 'product')
